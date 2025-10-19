@@ -37,3 +37,14 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+  
+  post-build:
+    needs: build
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - uses: actions/checkout@v4
+    - name: Post-build notification (example)
+      run: |
+        echo "Build job finished for commit $GITHUB_SHA"
+        echo "Workflow run: $GITHUB_RUN_ID"
