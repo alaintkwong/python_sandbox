@@ -48,3 +48,40 @@ jobs:
       run: |
         echo "Build job finished for commit $GITHUB_SHA"
         echo "Workflow run: $GITHUB_RUN_ID"
+
+  validate-dev:
+    needs: post-build
+    runs-on: ubuntu-latest
+    if: ${{ needs.post-build.result == 'success' }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Validate - DEV
+      run: |
+        echo "Running DEV validations..."
+        # add real validation commands here
+        echo "DEV validation passed"
+
+  validate-uat:
+    needs: post-build
+    runs-on: ubuntu-latest
+    if: ${{ needs.post-build.result == 'success' }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Validate - UAT
+      run: |
+        echo "Running UAT validations..."
+        # add real validation commands here
+        echo "UAT validation passed"
+
+  validate-prod:
+    needs: post-build
+    runs-on: ubuntu-latest
+    if: ${{ needs.post-build.result == 'success' }}
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+    - name: Validate - PROD
+      run: |
+        echo "Running PROD validations..."
+        # add real validation commands here
+        echo "PROD validation passed"
